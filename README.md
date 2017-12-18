@@ -8,7 +8,7 @@ Negative sampling, subsampling, and sparse gradient updates are used to achieve 
 
 #### This project essentially reimplements following papers:
 * [Exploring phrase-compositionality in skip-gram models](https://arxiv.org/pdf/1607.06208.pdf) (Compositional Phrase Embeddings)
-* [Distributed Representations of Words and Phrases and their Compositionality](https://arxiv.org/pdf/1310.4546.pdf) (Negative Sampling & Common Words Subsampling)
+* [Distributed Representations of Words and Phrases and their Compositionality](https://arxiv.org/pdf/1310.4546.pdf) (Negative Sampling & Subsampling of the frequent words)
 * [Efficient Estimation of Word Representations in Vector Space](https://arxiv.org/pdf/1301.3781.pdf) (Skip-Gram model)
 
 and also allows using RNNs and CNNs for compositional phrase embeddings
