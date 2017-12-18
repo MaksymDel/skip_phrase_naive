@@ -1,0 +1,2 @@
+git+git://github.com/allenai/allennlp@eec65d61d0e4e026d35e3acc41c254ba56cece88
+nltk
