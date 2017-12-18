@@ -12,7 +12,7 @@ to get an embedding for any ngram in compositional way (e.g. `right` + `away`).
 #### Usage:
 1. Run 
 
-####: Requirments:
+#### Requirments:
 1. Run `bash scripts/install_requirements.sh` to install allennlp and nltk 
 
 #### Packages used:
