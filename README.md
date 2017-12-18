@@ -1,7 +1,10 @@
 # Skip-gram for phrases
-A PyTroch implementation of the word2vec model with ability to embed phrases in compositional way. <br>
+A PyTroch implementation of the word2vec model with ability to embed phrases in compositional way.
+
 That is, original word2vec package embeds only small portion of ngrams in atomic way (e.g. `right_away`) while this package allows
 to get an embedding for any ngram in compositional way (e.g. `right` + `away`). 
+
+Negative sampling, subsampling, and sparse gradient updates are used to achieve computational efficiency.
 
 #### This project essentially reimplements following papers:
 * [Efficient Estimation of Word Representations in Vector Space](https://arxiv.org/pdf/1301.3781.pdf) (Skip-Gram model)
