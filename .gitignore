@@ -1,5 +1,5 @@
-allennlp
-data
-models
+/allennlp
+/data
+/models
 
 *.pyc
