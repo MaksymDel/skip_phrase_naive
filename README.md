@@ -1,5 +1,5 @@
-# skip_gram_phrase
-A PyTroch implementation of the word2vec model with ability to embed phrases in compositional way. Built using  NLP library.
+# Skip-gram word2vec for phrases
+A PyTroch implementation of the word2vec model with ability to embed phrases in compositional way.
 
 Package uses:
 * python 3.6
@@ -9,9 +9,9 @@ Package uses:
 * [pytest](https://docs.pytest.org/en/latest/) for unit testing: run `pytest -v` 
 
 #### This project essentially reimplements following papers:
-* [Efficient Estimation of Word Representations in Vector Space (Skip-Gram model)](https://arxiv.org/pdf/1301.3781.pdf)
-* [Distributed Representations of Words and Phrases and their Compositionality (Negative Sampling & Common Words Subsampling)](https://arxiv.org/pdf/1310.4546.pdf)
-* [Exploring phrase-compositionality in skip-gram models (Compositional Phrase Embeddings)](https://arxiv.org/pdf/1607.06208.pdf)
+* [Efficient Estimation of Word Representations in Vector Space](https://arxiv.org/pdf/1301.3781.pdf) (Skip-Gram model)
+* [Distributed Representations of Words and Phrases and their Compositionality](https://arxiv.org/pdf/1310.4546.pdf) (Negative Sampling & Common Words Subsampling)
+* [Exploring phrase-compositionality in skip-gram models](https://arxiv.org/pdf/1607.06208.pdf) (Compositional Phrase Embeddings)
 * Allows usage of RNNs and CNNs to do compositional ohrase embeddings
 
 
