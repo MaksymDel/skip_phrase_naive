@@ -13,8 +13,13 @@ Negative sampling, subsampling, and sparse gradient updates are used to achieve 
 
 and also allows using RNNs and CNNs for compositional phrase embeddings
 
-#### Usage:
-1. Run 
+#### Usage example:
+You can start with a text file that contains one sentence per line. 
+1. Truecase and tokenize you dataset using external scripts (e.g. moses-scripts) 
+2. Build skip-gram dataset from the Step 1 result. Use windows size of 2:
+`python scripts/build_dataset.py gram tests/fixtures/lines.en tests/fixtures/skipgram.en 2`
+3. Train a skip-gram model: 
+`pass`
 
 #### Requirments:
 1. Run `bash scripts/install_requirements.sh` to install allennlp and nltk 

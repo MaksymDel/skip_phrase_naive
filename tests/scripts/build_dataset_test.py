@@ -1,9 +1,9 @@
 import os
 from allennlp.common.testing import AllenNlpTestCase
 
-from scripts.util import *
+from scripts.build_dataset import *
 
-class TestDataUtil(AllenNlpTestCase):
+class TestBuildDataset(AllenNlpTestCase):
     def test_build_dataset_skip_gram(self):
         out_path = 'tests/fixtures/lines-skipgram.en'
         try:
