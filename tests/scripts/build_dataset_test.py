@@ -13,7 +13,7 @@ class TestBuildDataset(AllenNlpTestCase):
         build_dataset_skip_gram('tests/fixtures/lines.en', out_path, 2)
         with open(out_path, 'r') as f:
             examples = f.readlines()
-            assert examples[-1] == '! disgusting'
+            assert examples[-1] == '!@@@disgusting'
 
     def test_process_line_skip_gram(self):
         l = "Jack of all trades , master of none ."

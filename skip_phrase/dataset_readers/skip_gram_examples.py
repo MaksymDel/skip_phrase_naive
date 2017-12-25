@@ -1,5 +1,4 @@
 from typing import Dict
-import json
 import logging
 
 from overrides import overrides
@@ -13,8 +12,9 @@ from allennlp.data.dataset import Dataset
 from allennlp.data.dataset_readers.dataset_reader import DatasetReader
 from allennlp.data.fields import LabelField, TextField
 from allennlp.data.instance import Instance
-from allennlp.data.tokenizers import Token, Tokenizer, WordTokenizer
+from allennlp.data.tokenizers import Token, Tokenizer, WordTokenizer 
 from allennlp.data.token_indexers import TokenIndexer, SingleIdTokenIndexer
+from allennlp.data.tokenizers.word_splitter import WordSplitter, JustSpacesWordSplitter
 
 logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
 
@@ -27,20 +27,60 @@ class SkipGramExamplesDatasetReader(DatasetReader):
 
     You can use `scripts/build_dataset.py` file to extract such word pairs from your data.
 
-    Expected format for each input line: "word1@@@word2" (without quotes)
+    Expected format for each input line: "pivot_phrase@@@context_word" (without quotes)
     
     The output of ``read`` is a list of ``Instance`` s with the fields:
-        pivot_word: ``TextField``
+        pivot_phrase: ``TextField``
+            Phrase or just word we are using as input 
         context_word: ``TextField``
+            Word we are trying to predict
 
     Parameters
     ----------
     tokenizer : ``Tokenizer``, optional
-        Tokenizer to use to split the title and abstrct into words or other kinds of tokens.
-        Defaults to ``WordTokenizer()``.
+        Tokenizer to use to split pivot token if it is a phrase
+        Default is JustSpacesWordSplitter since we expect examples dataset to be
+        truekased and tokenized externaly.
     token_indexers : ``Dict[str, TokenIndexer]``, optional
         Indexers used to define input token representations. Defaults to ``{"tokens":
         SingleIdTokenIndexer()}``.
     """
-    
+
+    def __init__(self,
+                 tokenizer: Tokenizer = None,
+                 token_indexers: Dict[str, TokenIndexer] = None) -> None:
+        self._tokenizer = tokenizer or WordTokenizer()
+        self._token_indexers = token_indexers or {"tokens": SingleIdTokenIndexer()}
+
+    def read(self, file_path):
+        instances = []
+        with open(cached_path(file_path), "r") as data_file:
+            logger.info("Reading instances from lines in file at: %s", file_path)
+            for line_num, line in enumerate(tqdm.tqdm(data_file.readlines())):
+                line = line.strip("\n")
+                if not line:
+                    continue
+                line = line.split("@@@")
+                pivot_phrase = line[0]
+                context_word = line[1] 
+                instances.append(self.text_to_instance(pivot_phrase, context_word))
+        if not instances:
+            raise ConfigurationError("No instances read!")
+        return Dataset(instances)
+        
+    def text_to_instance(self, pivot_phrase: str, context_word: str) -> Instance:
+        # tokenizing and indexing of the pivot phrase should occure here
+        tokenized_pivot_phrase = self._tokenizer.tokenize(pivot_phrase)
+        tokenized_context_word = self._tokenizer.tokenize(context_word)
+        pivot_phrase_field = TextField(tokenized_pivot_phrase, self._token_indexers)
+        context_word_field = TextField(tokenized_context_word, self._token_indexers)
+        fields = {'pivot_phrase': pivot_phrase_field, 'context_word': context_word_field}
+        return Instance(fields)
+
+    @classmethod
+    def from_params(cls, params: Params) -> 'SemanticScholarDatasetReader':
+        tokenizer = WordTokenizer(word_splitter=JustSpacesWordSplitter())
+        TokenIndexer.dict_from_params(params.pop('token_indexers', {}))
+        params.assert_empty(cls.__name__)
+        return cls(tokenizer=tokenizer, token_indexers=token_indexers)
 
