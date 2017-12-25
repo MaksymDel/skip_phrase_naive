@@ -4,3 +4,4 @@
 
 *.pyc
 .mypy_cache
+.cache
