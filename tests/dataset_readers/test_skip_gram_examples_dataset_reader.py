@@ -10,10 +10,10 @@ class TestSkipGramExamplesDatasetReader(AllenNlpTestCase):
         reader = SkipGramExamplesDatasetReader()
         dataset = reader.read('tests/fixtures/lines-skipgram.en')
 
-        instance1 = "the quick".split()
-        instance2 = "the brown".split()
-        instance3 = "quick the".split()
-        instance4 = "quick brown".split()
+        instance1 = "the@@@quick".split('@@@')
+        instance2 = "the@@@brown".split('@@@')
+        instance3 = "quick@@@the".split('@@@')
+        instance4 = "quick@@@brown".split('@@@')
 
 
         assert len(dataset.instances) == 128
@@ -29,3 +29,8 @@ class TestSkipGramExamplesDatasetReader(AllenNlpTestCase):
         fields = dataset.instances[3].fields
         assert [t.text for t in fields["pivot_phrase"].tokens] == [instance4[0]]
         assert [t.text for t in fields["context_word"].tokens] == [instance4[1]]
+
+        # skip-phrase mini-test
+        fields = reader.text_to_instance("i go to", "school").fields
+        assert [t.text for t in fields["pivot_phrase"].tokens] == ['i', 'go', 'to']
+        assert [t.text for t in fields["context_word"].tokens] == ['school']
