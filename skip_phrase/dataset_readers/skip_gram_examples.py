@@ -41,16 +41,22 @@ class SkipGramExamplesDatasetReader(DatasetReader):
         Tokenizer to use to split pivot token if it is a phrase
         Default is JustSpacesWordSplitter since we expect examples dataset to be
         truekased and tokenized externaly.
-    token_indexers : ``Dict[str, TokenIndexer]``, optional
+    pivot_phrase_token_indexers : ``Dict[str, TokenIndexer]``, optional
+        Indexers used to define input token representations. Defaults to ``{"tokens":
+        SingleIdTokenIndexer()}``.
+    context_word_token_indexers : ``Dict[str, TokenIndexer]``, optional
         Indexers used to define input token representations. Defaults to ``{"tokens":
         SingleIdTokenIndexer()}``.
     """
 
     def __init__(self,
                  tokenizer: Tokenizer = None,
-                 token_indexers: Dict[str, TokenIndexer] = None) -> None:
+                 pivot_phrase_token_indexers: Dict[str, TokenIndexer] = None,
+                 context_word_token_indexers: Dict[str, TokenIndexer] = None) -> None:
         self._tokenizer = tokenizer or WordTokenizer()
-        self._token_indexers = token_indexers or {"tokens": SingleIdTokenIndexer()}
+        # should become phrase words token indexer in skip-phrase 
+        self._pivot_phrase_token_indexers = pivot_phrase_token_indexers or {"tokens": SingleIdTokenIndexer()}
+        self._context_word_token_indexers = context_word_token_indexers or {"tokens": SingleIdTokenIndexer()}
 
     def read(self, file_path):
         instances = []
@@ -71,16 +77,18 @@ class SkipGramExamplesDatasetReader(DatasetReader):
     def text_to_instance(self, pivot_phrase: str, context_word: str) -> Instance:
         # tokenizing and indexing of the pivot phrase should occure here
         tokenized_pivot_phrase = self._tokenizer.tokenize(pivot_phrase)
-        tokenized_context_word = self._tokenizer.tokenize(context_word)
-        pivot_phrase_field = TextField(tokenized_pivot_phrase, self._token_indexers)
-        context_word_field = TextField(tokenized_context_word, self._token_indexers)
+        pivot_phrase_field = TextField(tokenized_pivot_phrase, self._pivot_phrase_token_indexers)
+        if context_word is not None:
+            context_word_field = LabelField(context_word)
         fields = {'pivot_phrase': pivot_phrase_field, 'context_word': context_word_field}
         return Instance(fields)
 
     @classmethod
-    def from_params(cls, params: Params) -> 'SemanticScholarDatasetReader':
+    def from_params(cls, params: Params) -> 'SkipGramExamplesDatasetReader':
         tokenizer = WordTokenizer(word_splitter=JustSpacesWordSplitter())
-        TokenIndexer.dict_from_params(params.pop('token_indexers', {}))
+        phrase_token_indexer = TokenIndexer.dict_from_params(params.pop('pivot_phrase_token_indexers', {}))
+        target_word_indexer = TokenIndexer.dict_from_params(params.pop('context_word_token_indexers', {}))
         params.assert_empty(cls.__name__)
-        return cls(tokenizer=tokenizer, token_indexers=token_indexers)
+        return cls(tokenizer=tokenizer, pivot_phrase_token_indexers=phrase_token_indexer, 
+                                        context_word_token_indexers=target_word_indexer)
 

@@ -19,18 +19,22 @@ class TestSkipGramExamplesDatasetReader(AllenNlpTestCase):
         assert len(dataset.instances) == 128
         fields = dataset.instances[0].fields
         assert [t.text for t in fields["pivot_phrase"].tokens] == [instance1[0]]
-        assert [t.text for t in fields["context_word"].tokens] == [instance1[1]]
+        assert fields["context_word"].label == instance1[1]
+
         fields = dataset.instances[1].fields
         assert [t.text for t in fields["pivot_phrase"].tokens] == [instance2[0]]
-        assert [t.text for t in fields["context_word"].tokens] == [instance2[1]]
+        assert fields["context_word"].label == instance2[1]
+
         fields = dataset.instances[2].fields
         assert [t.text for t in fields["pivot_phrase"].tokens] == [instance3[0]]
-        assert [t.text for t in fields["context_word"].tokens] == [instance3[1]]
+        assert fields["context_word"].label == instance3[1]
+
         fields = dataset.instances[3].fields
         assert [t.text for t in fields["pivot_phrase"].tokens] == [instance4[0]]
-        assert [t.text for t in fields["context_word"].tokens] == [instance4[1]]
+        assert fields["context_word"].label == instance4[1]
+
 
         # skip-phrase mini-test
         fields = reader.text_to_instance("i go to", "school").fields
         assert [t.text for t in fields["pivot_phrase"].tokens] == ['i', 'go', 'to']
-        assert [t.text for t in fields["context_word"].tokens] == ['school']
+        assert fields["context_word"].label == 'school'
