@@ -1,13 +1,13 @@
 import sys
 import os.path
 
-def build_dataset_skip_gram(path_in, path_out, window_size=2):
+def build_dataset_skip_gram(path_in, path_out, window_size):
     with open(path_in, 'r') as fin, open(path_out, 'a+') as fout:
         print("Start processing file `%s`..." % path_in)
         lines = fin.readlines()
         result_lines = []       
         for line in lines:
-            examples = process_line_skip_gram(line)
+            examples = process_line_skip_gram(line, window_size)
             if examples is not None:
                 examples = [" ".join(ex) for ex in examples]
                 result_lines.extend(examples)
@@ -15,7 +15,7 @@ def build_dataset_skip_gram(path_in, path_out, window_size=2):
         fout.writelines("\n".join(result_lines))
         print("Skip-gram dataset is wrote to the `%s`." % path_out)
 
-def process_line_skip_gram(line, window_size=2):
+def process_line_skip_gram(line, window_size):
     words = line.split()
 
     if len(words) < 2:
@@ -53,7 +53,7 @@ def main(argv):
     Assumes input dataset is already tokenized and truecased
    
     Usage:
-    python build dataset.py type path_in, path_out, window_size=2  
+    python build dataset.py type path_in, path_out, window_size
     
     Parameters
     ----------
@@ -66,7 +66,7 @@ def main(argv):
     mtype = argv[0]
     pin = argv[1]
     pout = argv[2]
-    window_size = argv[3]
+    window_size = int(argv[3])
 
     if os.path.isfile(pout):
         raise OSError("Output file alredy exist, please delete it or specify another output filename. Terminatig...")
@@ -84,7 +84,7 @@ if __name__ == "__main__":
 #
 Pseudocode to handle cases where dataset does not fit into a memory
 #
-def build_dataset_skip_gram(path_in, path_out, window_size=2):
+def build_dataset_skip_gram(path_in, path_out, window_size):
     with open(path_in, 'r') as fin, open(path_out, 'a') as fout:
         print("Start processing file %s...", path_in)
         line = fin.readline()

@@ -16,8 +16,8 @@ and also allows using RNNs and CNNs for compositional phrase embeddings
 #### Usage example:
 You can start with a text file that contains one sentence per line. 
 1. Truecase and tokenize you dataset using external scripts (e.g. moses-scripts) 
-2. Build skip-gram dataset from the Step 1 result. Use windows size of 2: <br>
-`python scripts/build_dataset.py gram ../../data/europarl/cleaned-tc-tok-train.en ../../data/europarl/skipgram.train.en 10`
+2. Build skip-gram dataset from the Step 1 result. Use windows size of 5: <br>
+`python scripts/build_dataset.py gram ../../data/europarl/cleaned-tc-tok-train.en ../../data/europarl/skipgram.train.en 5`
 3. Train a skip-gram model: 
 `pass`
 
