@@ -8,8 +8,9 @@ def build_dataset_skip_gram(path_in, path_out, window_size=2):
         result_lines = []       
         for line in lines:
             examples = process_line_skip_gram(line)
-            examples = [" ".join(ex) for ex in examples]
-            result_lines.extend(examples)
+            if examples is not None:
+                examples = [" ".join(ex) for ex in examples]
+                result_lines.extend(examples)
 
         fout.writelines("\n".join(result_lines))
         print("Skip-gram dataset is wrote to the `%s`." % path_out)
