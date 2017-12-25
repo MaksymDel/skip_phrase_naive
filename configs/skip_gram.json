@@ -45,7 +45,7 @@
   
     "trainer": {
       "num_epochs": 1,
-      "cuda_device": -1,
+      "cuda_device": 0,
       "grad_clipping": 10.0,
       "validation_metric": "-loss",
       "no_tqdm": true,
