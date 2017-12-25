@@ -19,7 +19,7 @@ You can start with a text file that contains one sentence per line.
 2. Build skip-gram dataset from the Step 1 result. Use windows size of 2: <br>
 `python scripts/build_dataset.py gram tests/fixtures/lines.en tests/fixtures/lines-skipgram.en 2`
 3. Train a skip-gram model: 
-`pass`
+`python run.py train tests/fixtures/skip_gram.json -s models/test`
 
 #### Requirments:
 1. Run `bash scripts/install_requirements.sh` to install allennlp and nltk 
