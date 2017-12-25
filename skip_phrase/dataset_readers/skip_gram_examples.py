@@ -22,12 +22,12 @@ logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
 @DatasetReader.register("skip_gram_examples")
 class SkipGramExamplesDatasetReader(DatasetReader):
     """
-    Reads a file containing pairs of words separated by space and extracted from some text corpus,
+    Reads a file containing pairs of words separated by `@@@` and extracted from some text corpus,
     and creates a dataset suitable for skip-gram model training.
 
     You can use `scripts/build_dataset.py` file to extract such word pairs from your data.
 
-    Expected format for each input line: "word1 word2" (without quotes)
+    Expected format for each input line: "word1@@@word2" (without quotes)
     
     The output of ``read`` is a list of ``Instance`` s with the fields:
         pivot_word: ``TextField``
@@ -42,5 +42,5 @@ class SkipGramExamplesDatasetReader(DatasetReader):
         Indexers used to define input token representations. Defaults to ``{"tokens":
         SingleIdTokenIndexer()}``.
     """
-
+    
 
