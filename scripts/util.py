@@ -1,5 +1,5 @@
-def build_skipgram_dataset(path_to_data):
+def build_dataset_skip_gram(path_to_data):
     pass
 
-def build_skipphrase_dataset(path_to_data):
+def build_dataset_skip_phrase(path_to_data):
     pass
