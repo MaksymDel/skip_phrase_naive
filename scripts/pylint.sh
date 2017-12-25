@@ -3,5 +3,5 @@
 
 set -e
 echo 'Starting pylint checks'
-pylint -d locally-disabled,locally-enabled -f colorized skip_gram_phrase tests
+pylint -d locally-disabled,locally-enabled -f colorized skip_phrase tests
 echo -e "pylint checks passed\n"
