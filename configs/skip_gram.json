@@ -43,7 +43,7 @@
       "type": "bucket",
       "sorting_keys": [["pivot_phrase", "num_tokens"]],
       "padding_noise": 0.0,
-      "batch_size": 256
+      "batch_size": 400
     },
   
     "trainer": {
@@ -55,7 +55,7 @@
       "no_tqdm": false,
       "optimizer": {
         "type": "adam",
-        "lr": 0.001
+        "lr": 0.1
         // "type": "sgd",
         // "momentum": 0,
         // "lr": 0.001
