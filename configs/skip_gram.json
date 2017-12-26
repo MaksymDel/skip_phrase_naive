@@ -37,8 +37,7 @@
         "input_size": 300,
         "hidden_size": 300,
         "bidirectional": false
-      },
-      "target_namespace": "shared_words_vocab"
+      }
     },
     "iterator": {
       "type": "bucket",
