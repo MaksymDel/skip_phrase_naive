@@ -52,7 +52,7 @@
       "patience": 4,
       "grad_clipping": 10.0,
       "validation_metric": "-loss",
-      "no_tqdm": true,
+      "no_tqdm": false,
       "optimizer": {
         "type": "adam",
         "lr": 0.001
