@@ -79,7 +79,7 @@ class SkipGramExamplesDatasetReader(DatasetReader):
         tokenized_pivot_phrase = self._tokenizer.tokenize(pivot_phrase)
         pivot_phrase_field = TextField(tokenized_pivot_phrase, self._pivot_phrase_token_indexers)
         if context_word is not None:
-            context_word_field = LabelField(context_word)
+            context_word_field = LabelField(context_word, label_namespace="shared_words_vocab") # do not hardcode it here
         fields = {'pivot_phrase': pivot_phrase_field, 'context_word': context_word_field}
         return Instance(fields)
 
