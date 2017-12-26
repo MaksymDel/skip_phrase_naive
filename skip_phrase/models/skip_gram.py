@@ -58,6 +58,7 @@ class SkipGram(Model):
 
         initializer(self)
 
+    @overrides
     def forward(self,
                 pivot_phrase: Dict[str, torch.LongTensor],
                 context_word: torch.LongTensor = None) -> Dict[str, torch.Tensor]:
@@ -70,7 +71,7 @@ class SkipGram(Model):
 
         class_probabilities = F.softmax(reshaped_log_probs, dim=-1)
 
-        output_dict = {"logits": reshaped_log_probs, "class_probabilities": class_probabilities}
+        output_dict = {"logits": reshaped_log_probs, "class_probabilities": class_probabilities, "encoder_outputs": encoded_pivot_phrase}
 
         if context_word is not None:
             loss = self.loss(reshaped_log_probs, context_word.squeeze(-1))
