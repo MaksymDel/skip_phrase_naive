@@ -15,3 +15,4 @@ import spacy, torch, numpy  # pylint: disable=multiple-imports
 
 from skip_phrase.dataset_readers import * # pylint: disable=wildcard-import
 from skip_phrase.models import * # pylint: disable=wildcard-import
+from skip_phrase.predictors import * # pylint: disable=wildcard-import

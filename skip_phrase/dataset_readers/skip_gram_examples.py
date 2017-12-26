@@ -74,13 +74,15 @@ class SkipGramExamplesDatasetReader(DatasetReader):
             raise ConfigurationError("No instances read!")
         return Dataset(instances)
         
-    def text_to_instance(self, pivot_phrase: str, context_word: str) -> Instance:
+    def text_to_instance(self, pivot_phrase: str, context_word: str = None) -> Instance:
         # tokenizing and indexing of the pivot phrase should occure here
         tokenized_pivot_phrase = self._tokenizer.tokenize(pivot_phrase)
         pivot_phrase_field = TextField(tokenized_pivot_phrase, self._pivot_phrase_token_indexers)
         if context_word is not None:
             context_word_field = LabelField(context_word, label_namespace="shared_words_vocab") # do not hardcode it here
-        fields = {'pivot_phrase': pivot_phrase_field, 'context_word': context_word_field}
+            fields = {'pivot_phrase': pivot_phrase_field, 'context_word': context_word_field}
+        else:
+            fields = {'pivot_phrase': pivot_phrase_field}
         return Instance(fields)
 
     @classmethod

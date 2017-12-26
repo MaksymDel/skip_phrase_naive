@@ -13,5 +13,9 @@ from skip_phrase import *
 
 from allennlp.commands import main  # pylint: disable=wrong-import-position
 
+predictors = {
+    'skip_gram': 'skip_gram'
+}
+
 if __name__ == "__main__":
-    main(prog="python run.py")
+    main(prog="python run.py", predictor_overrides=predictors)

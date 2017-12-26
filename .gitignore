@@ -6,3 +6,4 @@
 .mypy_cache
 .cache
 .vscode
+out.txt
