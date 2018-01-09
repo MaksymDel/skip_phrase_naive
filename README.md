@@ -1,5 +1,5 @@
 # Skip-phrase - unsupervised phrase embeddings
-A PyTroch implementation of the word2vec model with ability to embed phrases in compositional way.
+A pytorch anllennlp implementation of the word2vec model with ability to embed phrases in compositional way.
 
 That is, original word2vec package embeds only small portion of ngrams in atomic way (e.g. `right_away`) while this package allows
 to get an embedding for any ngram in compositional way (e.g. `right` + `away`). 
